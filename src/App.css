@@ -1,0 +1,26 @@
+/* App Specific Structure */
+.portfolio-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: var(--bg);
+}
+
+#main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.page-view-wrapper {
+  padding-top: 20px;
+  width: 100%;
+}
+
+.toast-check {
+  color: var(--emerald);
+  flex-shrink: 0;
+}

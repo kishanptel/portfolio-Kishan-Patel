@@ -1,0 +1,78 @@
+/* Footer Modern Styling (CNC Theme) */
+.modern-footer {
+  margin-top: 0;
+  padding: 40px 0 48px;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+}
+
+.modern-footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-left-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-brand-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-brand-icon {
+  color: var(--primary);
+}
+
+.footer-brand-text {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.footer-role-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-copyright-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+.footer-back-to-top:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+}

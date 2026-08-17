@@ -1,0 +1,46 @@
+/* 404 Page Styling */
+.not-found-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.not-found-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 480px;
+  box-shadow: var(--shadow-md);
+}
+
+.not-found-code {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+  font-family: var(--font-sans);
+}
+
+.not-found-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.not-found-desc {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+}
+
+.not-found-btn {
+  margin-top: 10px;
+}

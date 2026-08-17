@@ -1,0 +1,188 @@
+/* Experience & Education Styling (CNC Theme) */
+.exp-edu-modern-section {
+  position: relative;
+  background: #ffffff;
+}
+
+.exp-edu-dual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+@media (min-width: 900px) {
+  .exp-edu-dual-grid {
+    gap: 36px;
+  }
+}
+
+.exp-edu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+@media (min-width: 768px) {
+  .exp-edu-column {
+    gap: 22px;
+  }
+}
+
+.column-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .column-header-title {
+    gap: 12px;
+  }
+}
+
+.column-header-title h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+@media (min-width: 768px) {
+  .column-header-title h3 {
+    font-size: 1.35rem;
+  }
+}
+
+.column-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.column-icon-box.cyan {
+  color: var(--primary);
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-badge-border);
+}
+
+.column-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .column-cards-list {
+    gap: 20px;
+  }
+}
+
+.exp-edu-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--ease);
+}
+
+@media (min-width: 768px) {
+  .exp-edu-card {
+    padding: 26px;
+    gap: 12px;
+  }
+}
+
+.exp-edu-card:hover {
+  background: #ffffff;
+  border-color: var(--border-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.card-top-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.period-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.type-badge {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.grade-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.74rem;
+  padding: 3px 10px;
+  background: var(--emerald-bg);
+  border: 1px solid var(--emerald-border);
+  border-radius: var(--r-pill);
+  color: var(--emerald);
+  font-weight: 700;
+}
+
+.card-role-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+@media (min-width: 768px) {
+  .card-role-title {
+    font-size: 1.2rem;
+  }
+}
+
+.card-org-name {
+  font-size: 0.92rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.card-desc-text {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-body);
+}
+
+@media (max-width: 860px) {
+  .exp-edu-dual-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .exp-edu-card {
+    border-radius: var(--r-md);
+    padding: 18px 16px;
+  }
+}
