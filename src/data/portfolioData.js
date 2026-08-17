@@ -85,7 +85,7 @@ export const projectsData = [
     image: "/images/theblissco_website.png",
     liveUrl: "https://tbc-frontend-rho.vercel.app/",
     adminUrl: "https://tbc-admin-one.vercel.app/",
-    github: "https://github.com/kishanptel",
+    github: "https://github.com/kishanptel/tbc-frontend.git",
     techStack: ["React.js", "Node.js", "Express.js", "MongoDB", "Formik", "Cloudinary", "Nodemailer", "WhatsApp Widget", "Vercel"],
     highlights: [
       "Interactive DIY Flower Bouquet Builder with real-time stem selection, wrapping options, and live price calculation",
@@ -103,7 +103,7 @@ export const projectsData = [
     image: "/images/portfolio_website.png",
     liveUrl: "https://portfolio-kishan-patel.vercel.app/",
     adminUrl: "https://portfolio-admin-zeta-one.vercel.app/",
-    github: "https://github.com/kishanptel",
+    github: "https://github.com/kishanptel/portfolio-Kishan-Patel.git",
     techStack: ["React.js", "Node.js", "Express.js", "MongoDB Atlas", "JWT Auth", "REST APIs", "Formik", "Vite", "Vercel"],
     highlights: [
       "Full-stack MERN portfolio platform with public client storefront and dedicated admin management dashboard",
