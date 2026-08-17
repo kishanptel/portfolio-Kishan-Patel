@@ -101,7 +101,7 @@ export const projectsData = [
     badge: "Full-Stack MERN & Management Portal",
     description: "Developed a modern full-stack portfolio with an interactive client interface and a dedicated administrative management dashboard. Integrates MongoDB Atlas for direct cloud storage of contact inquiries, JWT-based secure admin authentication, unread/read message filtering, and serverless backend API deployment on Vercel.",
     image: "/images/portfolio_website.png",
-    liveUrl: "https://portfolio-kp.vercel.app/",
+    liveUrl: "https://portfolio-kishan-patel.vercel.app/",
     adminUrl: "https://portfolio-admin-zeta-one.vercel.app/",
     github: "https://github.com/kishanptel",
     techStack: ["React.js", "Node.js", "Express.js", "MongoDB Atlas", "JWT Auth", "REST APIs", "Formik", "Vite", "Vercel"],
