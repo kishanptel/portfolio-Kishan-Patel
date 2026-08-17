@@ -20,7 +20,7 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Show ALL 2 Projects in List View (Not divided) */}
+        {/* Showcase All Full-Stack MERN Projects */}
         <div className="projects-showcase-list">
           {projectsData.map((project, idx) => (
             <article
