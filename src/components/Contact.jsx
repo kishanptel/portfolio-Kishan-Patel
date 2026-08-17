@@ -1,18 +1,48 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Copy, Check, Send, MessageSquare, ArrowUpRight } from 'lucide-react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Copy,
+  Check,
+  Send,
+  MessageSquare,
+  ArrowUpRight,
+  AlertCircle,
+  Loader2,
+  CheckCircle2
+} from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
+import { api } from '../services/api';
 import './Contact.css';
 
+const contactValidationSchema = Yup.object({
+  name: Yup.string()
+    .trim()
+    .min(2, 'Name must be at least 2 characters')
+    .max(60, 'Name is too long')
+    .required('Please enter your name'),
+  email: Yup.string()
+    .trim()
+    .email('Please enter a valid email address')
+    .required('Please enter your email address'),
+  subject: Yup.string()
+    .trim()
+    .max(100, 'Subject is too long')
+    .optional(),
+  message: Yup.string()
+    .trim()
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message is too long')
+    .required('Please write your message')
+});
+
 export default function Contact({ onCopy }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
   const [copiedKey, setCopiedKey] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: null, message: '' });
 
   const handleLocalCopy = (text, label, key) => {
     onCopy(text, `${label} copied to clipboard!`);
@@ -22,24 +52,41 @@ export default function Contact({ onCopy }) {
     }, 2000);
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    const mailtoUrl = `mailto:${personalInfo.email}?subject=${encodeURIComponent(
-      formData.subject || `Portfolio Inquiry from ${formData.name}`
-    )}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    )}`;
-
-    window.location.href = mailtoUrl;
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    },
+    validationSchema: contactValidationSchema,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      setSubmitStatus({ type: null, message: '' });
+      try {
+        const response = await api.submitContact(values);
+        if (response.success) {
+          setSubmitStatus({
+            type: 'success',
+            message: 'Thank you! Your message has been sent successfully. I will get back to you soon.'
+          });
+          if (onCopy) onCopy('', 'Message received successfully!');
+          resetForm();
+        } else {
+          setSubmitStatus({
+            type: 'error',
+            message: response.message || 'Failed to send message. Please try again.'
+          });
+        }
+      } catch (err) {
+        setSubmitStatus({
+          type: 'error',
+          message: 'Unable to connect to server. Please check your connection and try again.'
+        });
+      } finally {
+        setSubmitting(false);
+      }
+    }
+  });
 
   return (
     <section id="contact" className="section-wrapper contact-modern-section">
@@ -85,6 +132,7 @@ export default function Contact({ onCopy }) {
                   className="contact-copy-btn"
                   onClick={() => handleLocalCopy(personalInfo.email, 'Email', 'email')}
                   title="Copy email"
+                  aria-label="Copy email"
                 >
                   {copiedKey === 'email' ? <Check size={15} className="copied-check" /> : <Copy size={15} />}
                 </button>
@@ -106,6 +154,7 @@ export default function Contact({ onCopy }) {
                   className="contact-copy-btn"
                   onClick={() => handleLocalCopy(personalInfo.phone, 'Phone', 'phone')}
                   title="Copy phone"
+                  aria-label="Copy phone"
                 >
                   {copiedKey === 'phone' ? <Check size={15} className="copied-check" /> : <Copy size={15} />}
                 </button>
@@ -146,6 +195,7 @@ export default function Contact({ onCopy }) {
                   rel="noopener noreferrer"
                   className="contact-copy-btn"
                   title="Open GitHub profile"
+                  aria-label="Open GitHub profile"
                 >
                   <ArrowUpRight size={15} />
                 </a>
@@ -154,83 +204,147 @@ export default function Contact({ onCopy }) {
             </div>
           </div>
 
-          {/* Right Column: Contact Message Form */}
+          {/* Right Column: Contact Message Form with Formik + Yup */}
           <div className="contact-form-column" data-aos="fade-up" data-aos-delay="200">
             <div className="contact-form-container">
               <h3 className="form-title-text">Send a Message</h3>
               <p className="form-sub-text">
-                Fill in the fields below to start a conversation.
+                Fill in the form below. Messages are saved directly to the database and notifications sent.
               </p>
 
-              <form onSubmit={handleSubmit} className="modern-message-form">
+              <form onSubmit={formik.handleSubmit} className="modern-message-form" noValidate>
+                
                 <div className="form-inputs-row">
+                  {/* Name Field */}
                   <div className="form-field-group">
-                    <label htmlFor="name" className="form-input-label">Your Name *</label>
+                    <label htmlFor="name" className="form-input-label">
+                      Your Name <span className="req-star">*</span>
+                    </label>
                     <input
                       type="text"
                       id="name"
                       name="name"
-                      required
                       placeholder="e.g. Alex Smith"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="form-text-input"
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className={`form-text-input ${
+                        formik.touched.name && formik.errors.name ? 'input-error' : ''
+                      } ${formik.touched.name && !formik.errors.name ? 'input-valid' : ''}`}
                     />
+                    {formik.touched.name && formik.errors.name && (
+                      <div className="field-error-msg">
+                        <AlertCircle size={13} />
+                        <span>{formik.errors.name}</span>
+                      </div>
+                    )}
                   </div>
 
+                  {/* Email Field */}
                   <div className="form-field-group">
-                    <label htmlFor="email" className="form-input-label">Your Email *</label>
+                    <label htmlFor="email" className="form-input-label">
+                      Your Email <span className="req-star">*</span>
+                    </label>
                     <input
                       type="email"
                       id="email"
                       name="email"
-                      required
                       placeholder="e.g. alex@example.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="form-text-input"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className={`form-text-input ${
+                        formik.touched.email && formik.errors.email ? 'input-error' : ''
+                      } ${formik.touched.email && !formik.errors.email ? 'input-valid' : ''}`}
                     />
+                    {formik.touched.email && formik.errors.email && (
+                      <div className="field-error-msg">
+                        <AlertCircle size={13} />
+                        <span>{formik.errors.email}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
+                {/* Subject Field */}
                 <div className="form-field-group">
                   <label htmlFor="subject" className="form-input-label">Subject</label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
-                    placeholder="Job Opportunity / Project Discussion"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="form-text-input"
+                    placeholder="Job Opportunity / Project Inquiry"
+                    value={formik.values.subject}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`form-text-input ${
+                      formik.touched.subject && formik.errors.subject ? 'input-error' : ''
+                    }`}
                   />
+                  {formik.touched.subject && formik.errors.subject && (
+                    <div className="field-error-msg">
+                      <AlertCircle size={13} />
+                      <span>{formik.errors.subject}</span>
+                    </div>
+                  )}
                 </div>
 
+                {/* Message Field */}
                 <div className="form-field-group">
-                  <label htmlFor="message" className="form-input-label">Message *</label>
+                  <label htmlFor="message" className="form-input-label">
+                    Message <span className="req-star">*</span>
+                  </label>
                   <textarea
                     id="message"
                     name="message"
-                    rows="5"
-                    required
-                    placeholder="Hi Kishan, I'd like to talk about..."
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="form-text-area"
+                    rows="4"
+                    placeholder="Hi Kishan, I'd like to discuss a MERN development project..."
+                    value={formik.values.message}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`form-text-area ${
+                      formik.touched.message && formik.errors.message ? 'input-error' : ''
+                    } ${formik.touched.message && !formik.errors.message ? 'input-valid' : ''}`}
                   />
+                  {formik.touched.message && formik.errors.message && (
+                    <div className="field-error-msg">
+                      <AlertCircle size={13} />
+                      <span>{formik.errors.message}</span>
+                    </div>
+                  )}
                 </div>
 
-                <button type="submit" className="btn btn-primary form-submit-button">
-                  <span>Send Message</span>
-                  <Send size={16} />
-                </button>
-
-                {submitted && (
-                  <div className="form-sent-notification">
-                    <Check size={16} />
-                    <span>Launching your email client to send message...</span>
+                {/* Submit Feedback Banner */}
+                {submitStatus.type && (
+                  <div className={`form-feedback-banner ${submitStatus.type}`}>
+                    {submitStatus.type === 'success' ? (
+                      <CheckCircle2 size={18} className="feedback-icon" />
+                    ) : (
+                      <AlertCircle size={18} className="feedback-icon" />
+                    )}
+                    <span>{submitStatus.message}</span>
                   </div>
                 )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                  className="btn btn-primary form-submit-button"
+                >
+                  {formik.isSubmitting ? (
+                    <>
+                      <Loader2 size={16} className="btn-spin-icon" />
+                      <span>Sending Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send size={16} />
+                    </>
+                  )}
+                </button>
+
               </form>
             </div>
           </div>

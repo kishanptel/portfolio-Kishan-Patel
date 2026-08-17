@@ -83,7 +83,7 @@ export const projectsData = [
     badge: "MERN E-Commerce & Custom Builder",
     description: "Built a full-stack MERN e-commerce application for handcrafted pipe cleaner flowers with separate customer storefront and role-based admin dashboard. Developed an interactive DIY Flower Bouquet Builder allowing real-time selection of stems, wrapping paper, ribbon styles, and dynamic price calculations.",
     image: "/images/theblissco_website.png",
-    liveUrl: "https://theblissco-frontend.vercel.app",
+    liveUrl: "https://tbc-frontend-rho.vercel.app/",
     adminUrl: "https://theblissco-admin.vercel.app",
     github: "https://github.com/kishanptel",
     techStack: ["React.js", "Node.js", "Express.js", "MongoDB", "Formik", "Cloudinary", "Nodemailer", "WhatsApp Widget", "Vercel"],

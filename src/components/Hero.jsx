@@ -39,7 +39,7 @@ export default function Hero({ onCopy }) {
         <div className="hero-pills-row" data-aos="fade-up" data-aos-delay="300">
           <div className="hero-stat-pill">
             <Code size={15} className="pill-cyan-icon" />
-            <span>React.js &bull; Node.js &bull; MongoDB &bull; Express</span>
+            <span>MongoDB &bull; Express &bull; React.js &bull; Node.js</span>
           </div>
           <div className="hero-stat-pill">
             <CheckCircle2 size={15} className="pill-cyan-icon" />

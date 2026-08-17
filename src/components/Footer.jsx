@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="modern-footer">
       <div className="container modern-footer-container">
-
+        
         <div className="footer-left-info">
           <div className="footer-brand-tag">
             <Code2 size={16} className="footer-brand-icon" />
